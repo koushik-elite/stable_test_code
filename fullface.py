@@ -1,10 +1,10 @@
 import torch
 from diffusers import StableDiffusionPipeline, StableDiffusionImg2ImgPipeline, StableDiffusionInpaintPipelineLegacy, DDIMScheduler, AutoencoderKL
 from PIL import Image
+from ip_adapter import IPAdapter, IPAdapterFull, IPAdapterPlus
 
-from ip_adapter import IPAdapter
-
-base_model_path = "runwayml/stable-diffusion-v1-5"
+# base_model_path = "runwayml/stable-diffusion-v1-5"
+base_model_path = "SG161222/Realistic_Vision_V2.0"
 vae_model_path = "stabilityai/sd-vae-ft-mse"
 image_encoder_path = "all_models/IP-Adapter/models/image_encoder/"
 ip_ckpt = "all_models/IP-Adapter/models/ip-adapter-full-face_sd15.bin"
@@ -42,13 +42,23 @@ pipe = StableDiffusionPipeline.from_pretrained(
     safety_checker=None
 )
 
-image = Image.open("assets/images/test1.jpg")
-image.resize((256, 256))
+image = Image.open("assets/myface/akk2.png")
+# image.resize((256, 256))
 
 # load ip-adapter
-ip_model = IPAdapter(pipe, image_encoder_path, ip_ckpt, device)
+# ip_model = IPAdapterPlus(pipe, image_encoder_path, ip_ckpt, device, num_tokens=16)
+ip_model = IPAdapterFull(pipe, image_encoder_path, ip_ckpt, device, num_tokens=257)
+# ip_model = IPAdapter(pipe, image_encoder_path, ip_ckpt, device)
 
-all_images = ip_model.generate(pil_image=image, num_samples=10, num_inference_steps=50, seed=42)
+# all_images = ip_model.generate(pil_image=image, num_samples=4, num_inference_steps=50, seed=42)
+
+all_images = ip_model.generate(
+    pil_image=image, num_samples=5, 
+    prompt="A beautiful women, brassiere clothing, best quality, portrait, hyperrealistic",
+    num_inference_steps=50, seed=420)
+
+# all_images = ip_model.generate(pil_image=image, num_samples=10, num_inference_steps=100, seed=420,
+#         prompt="best quality, A photo of a indian women wearing a bra, upper body")
 
 n = 0
 for image in all_images:
