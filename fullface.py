@@ -4,10 +4,14 @@ from PIL import Image
 from ip_adapter import IPAdapter, IPAdapterFull, IPAdapterPlus
 
 # base_model_path = "runwayml/stable-diffusion-v1-5"
-base_model_path = "SG161222/Realistic_Vision_V2.0"
+# base_model_path = "SG161222/Realistic_Vision_V2.0"
+base_model_path = "SG161222/Realistic_Vision_V5.1_noVAE"
 vae_model_path = "stabilityai/sd-vae-ft-mse"
 image_encoder_path = "all_models/IP-Adapter/models/image_encoder/"
-ip_ckpt = "all_models/IP-Adapter/models/ip-adapter-full-face_sd15.bin"
+# ip_ckpt = "all_models/IP-Adapter/models/ip-adapter-full-face_sd15.bin"
+ip_ckpt = "all_models/IP-Adapter/models/ip-adapter_sd15.bin"
+# ip_ckpt = "all_models/IP-Adapter/models/ip-adapter-plus_sdxl_vit-h.bin"
+
 device = "cuda"
 
 def image_grid(imgs, rows, cols):
@@ -42,23 +46,26 @@ pipe = StableDiffusionPipeline.from_pretrained(
     safety_checker=None
 )
 
-image = Image.open("assets/myface/akk2.png")
+image = Image.open("assets/myface/precy.png")
 # image.resize((256, 256))
 
 # load ip-adapter
 # ip_model = IPAdapterPlus(pipe, image_encoder_path, ip_ckpt, device, num_tokens=16)
-ip_model = IPAdapterFull(pipe, image_encoder_path, ip_ckpt, device, num_tokens=257)
-# ip_model = IPAdapter(pipe, image_encoder_path, ip_ckpt, device)
+# ip_model = IPAdapterFull(pipe, image_encoder_path, ip_ckpt, device, num_tokens=257)
+ip_model = IPAdapter(pipe, image_encoder_path, ip_ckpt, device)
 
 # all_images = ip_model.generate(pil_image=image, num_samples=4, num_inference_steps=50, seed=42)
 
-all_images = ip_model.generate(
-    pil_image=image, num_samples=5, 
-    prompt="A beautiful women, brassiere clothing, best quality, portrait, hyperrealistic",
-    num_inference_steps=50, seed=420)
+# all_images = ip_model.generate(
+#     pil_image=image, num_samples=2, 
+#     prompt="A beautiful women, hyperrealistic, best quality", 
+#     num_inference_steps=50, seed=420) photo of a beautiful girl wearing wearing a bra
 
 # all_images = ip_model.generate(pil_image=image, num_samples=10, num_inference_steps=100, seed=420,
 #         prompt="best quality, A photo of a indian women wearing a bra, upper body")
+
+all_images = ip_model.generate(pil_image=image, num_samples=4, num_inference_steps=50, seed=42,
+        prompt="in a garden, full upper body, boobs, best quality, high quality", scale=0.8)
 
 n = 0
 for image in all_images:
