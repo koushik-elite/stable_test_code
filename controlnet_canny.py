@@ -28,7 +28,7 @@ vae = AutoencoderKL.from_pretrained("madebyollin/sdxl-vae-fp16-fix", torch_dtype
 pipe = StableDiffusionXLControlNetPipeline.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", controlnet=controlnet, vae=vae, torch_dtype=torch.float16,)
 pipe.enable_model_cpu_offload()
 
-image = Image.open("assets/images/athena_merge.jpg").convert("RGB")
+image = Image.open("assets/images/sketch_merge.jpg").convert("RGB")
 width, height = image.size
 ratio = width / height
 new_height = 900
@@ -42,9 +42,7 @@ image = image[:, :, None]
 image = np.concatenate([image, image, image], axis=2)
 image = Image.fromarray(image)
 
-prompt = "nude couple, nude lovers, greek women with greek warrior helmet with a young man, goddess, Sexy and kinky, hyper realistic, high quality"
-# prompt = "a naked women showing booty, photo realistic, Ultra realistic, high quality, extremely detailed. all on Stable Diffusion 1.5 base model."
-# prompt = "Sexy Pallas Athena standing on a globe, holding a spear in her left hand and her shield in her right hand, Roman Soldier Helmet, Nude, boobs, same pose, extremely detailed, photo-realistic, high quality, (extremely detailed eyes face and hands)"
+# prompt = "Human Infographic image, photo realistic, Ultra realistic, high quality, extremely detailed. all on Stable Diffusion 1.5 base model."
 neg_prompt = "ugly, deformed, disfigured, poor details, bad anatomy, free hair, mutant, cropped, worst quality, low quality, jpeg artifacts, signature, watermark, username, blurry, made by children, caricature, ugly, boring, sketch, lacklustre, repetitive, cropped, (long neck), body horror, out of frame, mutilated, tiled, frame, border, porcelain skin"
 
 for item in tqdm(combined_list, total=len(combined_list)):
