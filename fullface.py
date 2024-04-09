@@ -62,7 +62,7 @@ ip_model = IPAdapter(pipe, image_encoder_path, ip_ckpt, device)
 #     num_inference_steps=50, seed=420) photo of a beautiful girl wearing wearing a bra
 
 # all_images = ip_model.generate(pil_image=image, num_samples=10, num_inference_steps=100, seed=420,
-#         prompt="best quality, A photo of a indian women wearing a bra, upper body")
+#         prompt="best quality, upper body")
 
 all_images = ip_model.generate(pil_image=image, num_samples=4, num_inference_steps=50, seed=42,
         prompt="in a garden, full upper body, boobs, best quality, high quality", scale=0.8)
