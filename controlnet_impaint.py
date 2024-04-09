@@ -55,13 +55,10 @@ control_image = make_inpaint_condition(init_image, mask_image)
 controlnet = ControlNetModel.from_pretrained("lllyasviel/control_v11p_sd15_inpaint", torch_dtype=torch.float16)
 # controlnet = ControlNetModel.from_pretrained("diffusers/controlnet-canny-sdxl-1.0", torch_dtype=torch.float16)
 
-pipe = StableDiffusionControlNetInpaintPipeline.from_pretrained("runwayml/stable-diffusion-v1-5", safety_checker = None, controlnet=controlnet, torch_dtype=torch.float16)
+pipe = StableDiffusionControlNetInpaintPipeline.from_pretrained("runwayml/stable-diffusion-v1-5", controlnet=controlnet, torch_dtype=torch.float16)
 # pipe = StableDiffusionControlNetInpaintPipeline.from_pretrained("runwayml/stable-diffusion-inpainting", controlnet=controlnet, safety_checker=None, torch_dtype=torch.float16)
 pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
 pipe.enable_model_cpu_offload()
-
-pipe.load_lora_weights("/mnt/d/models/jkPerfectBreastsv03.safetensors")
-# pipe.load_lora_weights("/mnt/d/models/marblecarvingcd-000012.safetensors")
 
 # width, height = init_image.size
 # ratio = width / height
@@ -86,18 +83,10 @@ pipe.load_lora_weights("/mnt/d/models/jkPerfectBreastsv03.safetensors")
 # for installation instructions
 # pipe.enable_xformers_memory_efficient_attention()
 # pipe.enable_model_cpu_offload()
-# prompt = "ultmcntry, highest quality, award-winning, athletic body, large breasts, (breast worship:0.7), (detailed skin), [beauty marks], hyperrealistic photography,  natural lighting, (crepuscular rays:0.6), photographed on a Nikon D6 , 50mm prime lens, F/2.6, (highly detailed), with Kodak Gold 200 film , film grain, dynamic angle, full body"
-prompt = "A nude italian women, (perky_breasts:1.1), <lora:MyBreastHelper15RS:0.4>, BREAK photo realistic, Ultra realistic, high quality, extremely detailed."
-# prompt = "marble sculpture bust, Nude, bell shape boobs amd nipples, deep cleavage. (nude upper body:1.9), photo realistic, Ultra realistic, high quality, extremely detailed."
-# prompt = "Nude, Small breasts. Fantasy, Intricate, Detailed, colourfull, Constrain Proportions, Ultra realistic. Photography. Portrait."
-# prompt = "a naked french woman, big breasts!, erect nipples, holding helmet, beautiful symmetric body, muscles, fit, athletic. smoth edjes, (high detailed skin:1.2). Ultra realistic. Photography. professional, 4k, highly detailed, photo realistic, high quality."
-# prompt = "marble sculpture of naked warrior women, smoth edjes, hair bun, full boobs and hard nipples, arms facing down, bare shoulder, no belly bottom, full boobs over statue holder, (bare shoulder:1.9), (bare chest:1.9), extremely detailed chest, photo-realistic, high quality"
-# prompt = "copper statue of naked women, full (boobs:1.9) erect (nipples:1.9), smoth edjes, bare neck shoulder and arms, navel, (waist:1.9), (navel:1.9), (bare shoulder:1.9), (bare chest:1.9), photo-realistic, high quality, (extremely detailed chest and belly)"
-# prompt = "marble bust, white flawless, firm round raised boobs and nipples, (upper body:1.5), bare masculine shoulder and arms, hair bun, hyper details, «bare shoulders», extremely detailed, photo-realistic, high quality, all on Stable Diffusion 1.5 base model."
-# prompt = "Sexy Pallas Athena standing on a globe, holding a spear in her left hand and her shield in her right hand, Roman Soldier Helmet, Nude, boobs, same pose, extremely detailed, photo-realistic, high quality, (extremely detailed eyes face and hands)"
+
+prompt = "marble bust, white flawless, masculine shoulder and arms, hyper details, extremely detailed, photo-realistic, high quality, all on Stable Diffusion 1.5 base model."
 neg_prompt = "ugly, deformed, disfigured, poor details, bad anatomy, free hair, mutant, cropped, worst quality, low quality, jpeg artifacts, signature, watermark, username, blurry, made by children, caricature, ugly, boring, sketch, lacklustre, repetitive, cropped, (long neck), body horror, out of frame, mutilated, tiled, frame, border, porcelain skin"
-# # prompt = "hindu goddess parvati standing view from backside show the entire toned Booty and cracks, Female Booty Shower, hip, booty, full body shot, best quality, high quality"
-# # all_images = pipe(prompt=prompt, strength=0.75, guidance_scale=12).images
+
 all_images = pipe(prompt=prompt, 
     negative_prompt=neg_prompt,  
     num_inference_steps=35,
