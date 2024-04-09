@@ -31,17 +31,9 @@ init_image.save(f"output/init_images_resize.png")
 # url = "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/img2img-sdxl-init.png"
 # init_image = load_image(url)
 
-# prompt = "Astronaut in a war zone, guns in hands, detailed, 8k, best quality, high quality"
+prompt = "Astronaut in a war zone, guns in hands, detailed, 8k, best quality, high quality"
+neg_prompt = "ugly, deformed, disfigured, poor details, bad anatomy, free hair, mutant, cropped, worst quality, low quality, jpeg artifacts, signature, watermark, username, blurry, made by children, caricature, ugly, boring, sketch, lacklustre, repetitive, cropped, (long neck), body horror, out of frame, mutilated, tiled, frame, border, porcelain skin"
 
-# pass prompt and image to pipeline
-# image = pipeline(prompt, image=init_image, strength=0.5).images[0]
-# prompt = "Athena protects young man from eros, Greek goddess, Sexy and kinky, hyper realistic, high quality"
-prompt = "woman sari posing for a picture, belly button showing, attractive girl tomboy, curved red arrow, various lacivious seducing poses, black leather slim clothes, <lora:epiCRealismHelper:0.7> , <lora:detail_slider_v4:0.7> , <lora:weight_slider_v2:0.7>"
-# prompt = "Pallas Athena, seductive smile, Sexy and kinky, ample cleavage, EasyNegative, extremely detailed, (worst quality:2), (low quality:2), (normal quality:2), photo-realistic, high quality, (extremely detailed eyes face and hands)"
-# prompt = "Sexy Pallas Athena standing on a globe, holding a spear in her left hand and her shield in her right hand, Roman Soldier Helmet, Nude, boobs, same pose, extremely detailed, photo-realistic, high quality, (extremely detailed eyes face and hands)"
-neg_prompt  = "ugly, deformed, disfigured, poor details, bad anatomy, lowres, saree cloth, mutant, cropped, worst quality, low quality, jpeg artifacts, signature, watermark, username, blurry, made by children, caricature, ugly, boring, sketch, lacklustre, repetitive, cropped, (long neck), body horror, out of frame, mutilated, tiled, frame, border, porcelain skin, doll"
-# prompt = "hindu goddess parvati standing view from backside show the entire toned Booty and cracks, Female Booty Shower, hip, booty, full body shot, best quality, high quality"
-# all_images = pipe(prompt=prompt, strength=0.75, guidance_scale=12).images
 all_images = pipe(prompt=prompt, negative_prompt=neg_prompt, image=init_image, num_inference_steps=50, strength=0.8, guidance_scale=12).images
 
 # print(all_images)
