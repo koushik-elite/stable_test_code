@@ -42,7 +42,7 @@ image = image[:, :, None]
 image = np.concatenate([image, image, image], axis=2)
 image = Image.fromarray(image)
 
-# prompt = "Human Infographic image, photo realistic, Ultra realistic, high quality, extremely detailed. all on Stable Diffusion 1.5 base model."
+prompt = "Human Infographic image, photo realistic, Ultra realistic, high quality, extremely detailed. all on Stable Diffusion 1.5 base model."
 neg_prompt = "ugly, deformed, disfigured, poor details, bad anatomy, free hair, mutant, cropped, worst quality, low quality, jpeg artifacts, signature, watermark, username, blurry, made by children, caricature, ugly, boring, sketch, lacklustre, repetitive, cropped, (long neck), body horror, out of frame, mutilated, tiled, frame, border, porcelain skin"
 
 for item in tqdm(combined_list, total=len(combined_list)):
