@@ -65,7 +65,7 @@ ip_model = IPAdapter(pipe, image_encoder_path, ip_ckpt, device)
 #         prompt="best quality, upper body")
 
 all_images = ip_model.generate(pil_image=image, num_samples=4, num_inference_steps=50, seed=42,
-        prompt="in a garden, full upper body, boobs, best quality, high quality", scale=0.8)
+        prompt="in a garden, full upper body, best quality, high quality", scale=0.8)
 
 n = 0
 for image in all_images:
